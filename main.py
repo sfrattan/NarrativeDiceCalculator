@@ -1,4 +1,5 @@
 from NarrativeDice import *
+# from DiceDicts import *
 import argparse
 
 if __name__ == '__main__':
@@ -12,7 +13,8 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--cumulative', action='store_true',
                         help='probabilities of at least a given symbol count')
 
-    # TODO: -e 'export' option with following arguments for file types (must be built into DicePoolData class)
+    # TODO: -e 'export' option with following argument for filename(s) and filetype (JSON or CSV)
+    # TODO: -v 'verbose' option for use with export to also print results to terminal
     # TODO: check man pages for other programs to see their write-to-file arguments/usage
 
     args = parser.parse_args()
@@ -21,20 +23,23 @@ if __name__ == '__main__':
     dice_list = []
     for d in args.dice:
         if d.lower() in ['b', 'boost']:
-            dice_list.append(boost)
+            dice_list.append(boost.copy())
         elif d.lower() in ['s', 'setback']:
-            dice_list.append(setback)
+            dice_list.append(setback.copy())
         elif d.lower() in ['a', 'ability']:
-            dice_list.append(ability)
+            dice_list.append(ability.copy())
         elif d.lower() in ['d', 'difficulty']:
-            dice_list.append(difficulty)
+            dice_list.append(difficulty.copy())
         elif d.lower() in ['p', 'proficiency']:
-            dice_list.append(proficiency)
+            dice_list.append(proficiency.copy())
         elif d.lower() in ['c', 'challenge']:
-            dice_list.append(challenge)
+            dice_list.append(challenge.copy())
         else:
             # TODO: Syntax error on exit(2)
             exit(2)
+
+    # dice_pool_data = DicePoolReporter(dice_list)
+
 
     # Create a root node for the tree of dice outcomes
     dice_tree = DieNode(None, (0, 0, 0, 0))
