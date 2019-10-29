@@ -126,7 +126,7 @@ class DicePoolData:
         for t in range(-1, min(self.p_a.keys()) - 1, -1):
             print('     ', abs(t), 'T:', round(threat_sums[t] * 100, 4), '%')
 
-class DieNode:
+class ResultNode:
     # A tree of dice results. Each level of the tree represents outcomes of a die in a list.
     # Each node is a single face rolled. Each node's children are the possible rolls (faces) of the next die.
 
@@ -143,7 +143,7 @@ class DieNode:
         if self.children is None:
             self.children = []
             for face in outcomes:
-                self.children.append(DieNode(self, face))
+                self.children.append(ResultNode(self, face))
         else:
             for child in self.children:
                 child.append_die(outcomes)

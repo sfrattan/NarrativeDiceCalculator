@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
 
     # Create a root node for the tree of dice outcomes
-    dice_tree = DieNode(None, (0, 0, 0, 0))
+    dice_tree = ResultNode(None, (0, 0, 0, 0))
     # Populate the tree of dice outcomes
     dice_tree.append_dice(dice_list)
     data = dice_tree.export_results()
