@@ -1,4 +1,6 @@
 import operator
+from numpy import percentile
+import csv
 
 # Each die face is a tuple with four numbers representing results on that face.
 # - The four numbers represent: (Success/Failure, Advantage/Threat, Triumph, Despair).
@@ -48,6 +50,12 @@ challenge = {(0, 0, 0, 0): 1,
              (0, -2, 0, 0): 2,
              (-1, 0, 0, 1): 1}
 
+b = boost
+s = setback
+a = ability
+d = difficulty
+p = proficiency
+c = challenge
 
 # Functions to access result types in a die face tuple by name
 def success(result): return result[0]  # A negative result here means some number of Failures.
@@ -128,3 +136,17 @@ class DicePoolReporter:
         for results, count in result_counts.items():
             ev += results * (count / self.total_results)
         return ev
+
+    def calculate_quartiles(self, result_counts):
+        result_list = []
+        for result, count in result_counts.items():
+            for item in range(count):
+                result_list.append(result)
+        quartiles = percentile(result_list, [25, 50, 75])
+        return {
+            'Min': min(list(result_counts.keys())),
+            'Q1': quartiles[0],
+            'Median': quartiles[1],
+            'Q3': quartiles[2],
+            'Max': max(list(result_counts.keys()))
+        }
